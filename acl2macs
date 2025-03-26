@@ -560,7 +560,7 @@ current top-level form.  See the documentation for enter-theorem."
    end of the ACL2 shell buffer, ready to submit that file."
   (unless (get-buffer *acl2-shell*)
     (error "Nonexistent *acl2-shell* buffer: %s" *acl2-shell*))
-  (let ((beg (nilsafe-min (point) (mark)))
+  (let ((beg (min (point) (mark)))
         (end (max (point) (mark))))
     (write-region-for-shell beg end)
     (switch-to-buffer *acl2-shell*)
@@ -1234,7 +1234,7 @@ of the current s-expression in the enclosing list"
                               (setq *dmr-debug-output*
                                     (cons (buffer-string) *dmr-debug-output*))))
                       (goto-char (if common
-                                     (nilsafe-min (abs common) (point-max))
+                                     (min (abs common) (point-max))
                                    (point-min)))
                       (beginning-of-line)
                       (if (< (point) (point-max))
