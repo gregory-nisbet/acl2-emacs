@@ -3580,5 +3580,5 @@ with, for example, meta-3 control-t /."
 
 
 ;; Local Variables:
-;; mode: elisp
+;; mode: emacs-lisp
 ;; End:
