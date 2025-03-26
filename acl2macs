@@ -557,7 +557,7 @@ current top-level form.  See the documentation for enter-theorem."
    end of the ACL2 shell buffer, ready to submit that file."
   (unless (get-buffer *acl2-shell*)
     (error "Nonexistent *acl2-shell* buffer: %s" *acl2-shell*))
-  (let ((beg (min (point) (mark)))
+  (let ((beg (nilsafe-min (point) (mark)))
         (end (max (point) (mark))))
     (write-region-for-shell beg end)
     (switch-to-buffer *acl2-shell*)
@@ -568,6 +568,9 @@ current top-level form.  See the documentation for enter-theorem."
   "Writes the current region to the shell temp file and then puts the cursor
    at the end of the ACL2 shell buffer, ready to execute an ld."
   (interactive)
+  ;; mark the current defun if there is no mark.
+  (when (not mark-active)
+    (mark-defun))
   (send-region-to-shell
    (concat (format
             ";; Ready to execute ACL2-LOAD -- hit <RETURN> when ready\n")
@@ -579,6 +582,9 @@ current top-level form.  See the documentation for enter-theorem."
    at the end of the ACL2 shell buffer, ready to execute an ld with output
    inhibited and proofs skipped."
   (interactive)
+  ;; mark the current defun if there is no mark.
+  (when (not mark-active)
+    (mark-defun))
   (send-region-to-shell
    (concat (format
             ";; Ready to execute ACL2-LOAD -- hit <RETURN> when ready\n")
@@ -1225,7 +1231,7 @@ of the current s-expression in the enclosing list"
                               (setq *dmr-debug-output*
                                     (cons (buffer-string) *dmr-debug-output*))))
                       (goto-char (if common
-                                     (min (abs common) (point-max))
+                                     (nilsafe-min (abs common) (point-max))
                                    (point-min)))
                       (beginning-of-line)
                       (if (< (point) (point-max))
