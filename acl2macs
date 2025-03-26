@@ -1,6 +1,9 @@
 #!/bin/sh
 (eval ""); exec emacs -nw -q --load "$0" "$@"
 
+;; Some creature comforts.
+(defalias 'yes-or-no-p 'y-or-n-p)
+(setq confirm-kill-emacs 'y-or-n-p)
 
 ; ACL2 Version 8.6 -- A Computational Logic for Applicative Common Lisp
 ; Copyright (C) 2024, Regents of the University of Texas
