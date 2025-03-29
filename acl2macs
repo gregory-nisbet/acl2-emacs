@@ -1,5 +1,5 @@
 #!/bin/sh
-(eval ""); exec emacs -nw -q --load "$0" "$@"
+":"; exec emacs -nw -q --load "$0" "$@"
 
 ;; Some creature comforts.
 (defalias 'yes-or-no-p 'y-or-n-p)
